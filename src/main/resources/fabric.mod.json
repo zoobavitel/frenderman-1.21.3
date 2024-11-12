@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "frenderman",
+	"version": "${version}",
+	"name": "frenderman",
+	"description": "This is the frenderman mod by Cris Zbavitel. Made with love <3",
+	"authors": [
+		"Cris Zbavitel!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/zoobavitel/frenderman-1.21.3"
+	},
+	"license": "MIT",
+	"icon": "assets/frenderman/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.zbavitel.frenderman.Frenderman"
+		],
+		"fabric-datagen": [
+			"net.zbavitel.frenderman.FrendermanDataGenerator"
+		],
+		"client": [
+			"net.zbavitel.frenderman.FrendermanClient"
+		]
+	},
+	"mixins": [
+		"frenderman.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.21.3",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
