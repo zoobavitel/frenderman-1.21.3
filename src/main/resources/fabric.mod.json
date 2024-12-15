@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "frenderman",
+	"version": "${version}",
+	"name": "frenderman-1.21.1",
+	"description": "This is a mod that allows players to befriend Endermen! Made with love. lmao.",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://zbavitel.net/",
+		"sources":
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/frenderman/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.zbavitel.frenderman.Frenderman1211"
+		],
+		"fabric-datagen": [
+			"net.zbavitel.frenderman.Frenderman1211DataGenerator"
+		],
+		"client": [
+			"net.zbavitel.frenderman.frendermanClient"
+		]
+	},
+	"mixins": [
+		"frenderman.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
