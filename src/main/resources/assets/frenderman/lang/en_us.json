@@ -1,0 +1,8 @@
+{
+  "item.frenderman.copper_coin": "Copper Coin",
+  "itemgroup.frenderman.copper_coin_items": "Frenderman Items",
+  "advancements.frenderman.tame_enderman.title": "Friend of the End",
+  "advancements.frenderman.tame_enderman.description": "Tame an Enderman using a Copper Coin.",
+  "advancements.frenderman.feed_flower.title": "Flower of Friendship",
+  "advancements.frenderman.feed_flower.description": "Feed a flower to a Tamed Enderman."
+}

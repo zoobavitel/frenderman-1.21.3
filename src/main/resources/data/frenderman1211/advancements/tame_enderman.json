@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "frenderman:copper_coin"
+    },
+    "title": "Friend of the End",
+    "description": "Tame an Enderman using a Copper Coin.",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "tame_enderman": {
+      "trigger": "minecraft:tame_animal",
+      "conditions": {
+        "entity": {
+          "type": "frenderman:tamed_enderman"
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 50
+  }
+}

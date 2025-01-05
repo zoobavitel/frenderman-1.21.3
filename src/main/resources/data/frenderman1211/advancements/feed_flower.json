@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:poppy"
+    },
+    "title": "Flower of Friendship",
+    "description": "Feed a flower to a Tamed Enderman.",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "feed_flower": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "item": {
+          "tag": "minecraft:flowers"
+        },
+        "entity": {
+          "type": "frenderman:tamed_enderman"
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 25
+  }
+}
