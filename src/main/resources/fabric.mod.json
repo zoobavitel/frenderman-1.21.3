@@ -9,20 +9,19 @@
 	],
 	"contact": {
 		"homepage": "https://zbavitel.net/",
-		"sources":
+		"sources": ""
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/frenderman/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"net.zbavitel.frenderman.Frenderman1211"
+          "net.zbavitel.frenderman.Frenderman"
 		],
 		"fabric-datagen": [
-			"net.zbavitel.frenderman.Frenderman1211DataGenerator"
 		],
 		"client": [
-			"net.zbavitel.frenderman.frendermanClient"
+          "net.zbavitel.frenderman.entity.client.frendermanClient"
 		]
 	},
 	"mixins": [

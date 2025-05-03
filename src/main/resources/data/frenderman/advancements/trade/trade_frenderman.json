@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "frenderman:copper_coin"
+    },
+    "title": {
+      "text": "Business Partner"
+    },
+    "description": {
+      "text": "Trade with your Tamed Enderman."
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "trade_with_tamed_enderman": {
+      "trigger": "minecraft:villager_trade",
+      "conditions": {
+        "item": {
+          "item": "frenderman:copper_coin"
+        }
+      }
+    }
+  }
+}

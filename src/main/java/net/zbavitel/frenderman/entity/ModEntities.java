@@ -1,27 +1,32 @@
 package net.zbavitel.frenderman.entity;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
-import net.minecraft.util.Identifier;
+import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.entity.mob.EndermanEntity;
-import net.zbavitel.frenderman.Frenderman1211;
+import net.minecraft.util.Identifier;
+import net.zbavitel.frenderman.Frenderman;
+import net.zbavitel.frenderman.entity.custom.FrendermanEntity;   // <‑‑ correct import!
 
-public class ModEntities {
+public final class ModEntities {
 
-    // Define the custom TamedEndermanEntity
-    public static final EntityType<TamedEndermanEntity> TAMED_ENDERMAN = Registry.register(
-            Registries.ENTITY_TYPE,
-            new Identifier(Frenderman1211.MOD_ID, "tamed_enderman"),
-            FabricEntityTypeBuilder.createMob()
-                    .entityFactory(TamedEndermanEntity::new) // Links to your custom entity class
-                    .defaultAttributes(EndermanEntity::createEndermanAttributes) // Inherits Enderman attributes
-                    .build()
-    );
+    public static final EntityType<FrendermanEntity> FRENDERMAN = Registry.register(Registries.ENTITY_TYPE,
+            Identifier.of(Frenderman.MOD_ID, "frenderman"),
+            EntityType.Builder.create(FrendermanEntity::new, SpawnGroup.CREATURE)
+                    .dimensions(0.6f, 2.9f).build());
 
-    // Method to register all entities
-    public static void registerEntities() {
-        Frenderman1211.LOGGER.info("Registering custom entities...");
+    public static void registerModEntities() {
+        Frenderman.LOGGER.info("Registering Mod Entities for " + Frenderman.MOD_ID);
+
+        FabricDefaultAttributeRegistry.register(
+                FRENDERMAN,
+                EndermanEntity.createEndermanAttributes()
+                        .add(EntityAttributes.GENERIC_ATTACK_DAMAGE) // optional but safe
+        );
     }
 }

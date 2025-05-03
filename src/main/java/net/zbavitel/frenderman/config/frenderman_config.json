@@ -1,0 +1,12 @@
+{
+  "tradeableItems": {
+    "frenderman:copper_coin": 20
+  },
+  "roleChances": {
+    "enchanter": 50,
+    "builder": 20,
+    "traveler": 30
+  },
+  "teleportDistance": 100,
+  "tradeLimit": 16
+}
