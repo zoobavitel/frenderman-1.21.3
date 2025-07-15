@@ -209,9 +209,11 @@ public class FrendermanEntity extends EndermanEntity implements Merchant {
                 return ActionResult.SUCCESS;
             }
 
-            if (!player.getWorld().isClient && itemStack.isEmpty()) {
+            if (!player.getWorld().isClient &&
+                    !itemStack.isOf(ModItems.COPPER_COIN) &&
+                    !itemStack.isIn(net.minecraft.registry.tag.ItemTags.FLOWERS)) {
                 this.setCustomer(player);
-                this.sendOffers(player, this.getDisplayName(), 1); // <- opens trade GUI
+                this.sendOffers(player, this.getDisplayName(), 1);
                 return ActionResult.SUCCESS;
             }
         }
