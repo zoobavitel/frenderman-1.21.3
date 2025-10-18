@@ -26,13 +26,14 @@ import net.minecraft.village.TradeOfferList;
 import net.minecraft.village.Merchant;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
-import net.zbavitel.frenderman.common.item.ModItems;
-import net.zbavitel.frenderman.common.trades.TradeFactoryRegistry;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.UUID;
+
+import net.zbavitel.frenderman.common.item.ModItems;
+import net.zbavitel.frenderman.common.trades.TradeFactoryRegistry;
 
 public class FrendermanEntity extends EndermanEntity implements Merchant {
 
@@ -74,7 +75,6 @@ public class FrendermanEntity extends EndermanEntity implements Merchant {
         }
     }
 
-    @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.setTamed(nbt.getBoolean("Tamed"));
@@ -209,10 +209,11 @@ public class FrendermanEntity extends EndermanEntity implements Merchant {
                 return ActionResult.SUCCESS;
             }
 
-            if (!player.getWorld().isClient &&
-                    !itemStack.isOf(ModItems.COPPER_COIN) &&
-                    !itemStack.isIn(net.minecraft.registry.tag.ItemTags.FLOWERS)) {
+            // ALWAYS open trading for the owner on the SERVER side (so the server populates offers and syncs them)
+            if (!player.getWorld().isClient) {
                 this.setCustomer(player);
+                // Ensure server-side offers are initialized
+                if (this.tradeOffers == null) initTradeOffers();
                 this.sendOffers(player, this.getDisplayName(), 1);
                 return ActionResult.SUCCESS;
             }
@@ -223,6 +224,9 @@ public class FrendermanEntity extends EndermanEntity implements Merchant {
 
     @Override
     public void tickMovement() {
+        // Update vanilla movement state first so model animations get correct limb/head/jump values
+        super.tickMovement();
+
         if (this.getWorld().isClient) {
             for (int i = 0; i < 2; i++) {
                 this.getWorld().addParticle(
@@ -237,7 +241,7 @@ public class FrendermanEntity extends EndermanEntity implements Merchant {
             }
         }
 
-        this.jumping = false;
+        // don't override jumping state here
 
         if (!this.getWorld().isClient) {
             this.tickAngerLogic((ServerWorld) this.getWorld(), true);
@@ -248,8 +252,6 @@ public class FrendermanEntity extends EndermanEntity implements Merchant {
                 }
             }
         }
-
-        super.tickMovement();
     }
 
     protected boolean teleportToOwner(double x, double y, double z) {
@@ -263,7 +265,7 @@ public class FrendermanEntity extends EndermanEntity implements Merchant {
             Vec3d oldPos = this.getPos();
             boolean success = this.teleport(x, y, z, true);
             if (success) {
-                this.getWorld().emitGameEvent(GameEvent.TELEPORT, oldPos, GameEvent.Emitter.of(this));
+                this.getWorld().emitGameEvent(net.minecraft.world.event.GameEvent.TELEPORT, oldPos, net.minecraft.world.event.GameEvent.Emitter.of(this));
                 if (!this.isSilent()) {
                     this.getWorld().playSound(null, this.prevX, this.prevY, this.prevZ, SoundEvents.ENTITY_ENDERMAN_TELEPORT, this.getSoundCategory(), 1.0F, 1.0F);
                     this.playSound(SoundEvents.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
@@ -285,7 +287,8 @@ public class FrendermanEntity extends EndermanEntity implements Merchant {
 
     @Override
     public void setOffersFromServer(TradeOfferList offers) {
-        
+        // Accept the server-sent offers (client-side call) so the trade screen can populate
+        this.tradeOffers = offers;
     }
 
     private void initTradeOffers() {
@@ -330,7 +333,6 @@ public class FrendermanEntity extends EndermanEntity implements Merchant {
 
     }
 
-
     @Override
     public boolean isLeveledMerchant() {
         return false;
@@ -343,6 +345,7 @@ public class FrendermanEntity extends EndermanEntity implements Merchant {
 
     @Override
     public boolean isClient() {
-        return false;
+        // Correctly report client/server side
+        return this.getWorld().isClient;
     }
 }
